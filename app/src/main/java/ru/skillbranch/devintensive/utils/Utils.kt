@@ -1,5 +1,7 @@
 package ru.skillbranch.devintensive.utils
 
+import ru.skillbranch.devintensive.utils.Utils.contains
+
 object Utils {
     fun parseFullName(fullName:String?):Pair<String?,String?>{
         var splitted: List<String>? = fullName?.split(" ")
@@ -11,7 +13,7 @@ object Utils {
         return firstName to lastName
     }
 
-    fun transliteration(payload: String): String {
+    fun transliteration(payload: String, divider:String=" "): String {
         var outstring:String = ""
         val baseDiff = 0x3CF
 
@@ -19,24 +21,27 @@ object Utils {
         for(ch in charArray){
             var diff:Int
             var converted:String = ""
-            val notMirrored = "[ЖжЧчШшЩщЮюЯяЬьЪъЫы]"
-            if(ch in Regex(notMirrored)){
+            val notMirrored = "[ЖжЧчШшЩщЮюЯяЬьЪъЫы ]"
+            val latinChars = "[A-Za-z]"
+
+            if(ch in Regex(latinChars)){
+                converted = ch.toString()
+            }
+            else if(ch in Regex(notMirrored)){
                 when(ch){
                     'Ж' -> converted = "Zh"
                     'ж' -> converted = "zh"
                     'Ч' -> converted = "Ch"
                     'ч' -> converted = "ch"
-                    'Ш' -> converted = "Sh"
-                    'ш' -> converted = "sh"
-                    'Щ' -> converted = "Sch"
-                    'щ' -> converted = "sch"
+                    in Regex("[ШЩ]") -> converted = "Sh"
+                    in Regex("[шщ]") -> converted = "sh"
                     'Ю' -> converted = "Yu"
                     'ю' -> converted = "yu"
                     'Я' -> converted = "Ya"
                     'я' -> converted = "ya"
-                    in Regex("[Ыы]") -> converted = "y"
+                    in Regex("[Ыы]") -> converted = "i"
                     in Regex("[ЬьЪъ]") -> converted = ""
-
+                    ' ' -> converted = divider
                     else -> throw(IllegalArgumentException("The character $ch unsupported here"))
                 }
             }
@@ -67,19 +72,29 @@ object Utils {
     }
 
     fun toInitials(firstName: String?, lastName: String?): String? {
-        val fn = firstName ?: ""
-        val ln = lastName ?: ""
-        if(fn == "" || ln == ""){
-            return ""
-        }
-        else {
-            val first = transliteration(fn).toUpperCase().toCharArray()[0]
-            val second = transliteration(ln).toUpperCase().toCharArray()[0]
+        val first:String
+        val second:String
 
-            return "$first$second"
+        var fn = firstName?.trim() ?: ""
+        var ln = lastName?.trim() ?: ""
+
+        if(fn != ""){
+            first = transliteration(fn).toUpperCase().toCharArray()[0].toString()
         }
+        else{
+            first = ""
+        }
+        if(ln != ""){
+            second = transliteration(ln).toUpperCase().toCharArray()[0].toString()
+        }
+        else{
+            second = ""
+        }
+        return if (first == "" && second == "") null else "$first$second"
+
     }
 
-    operator fun Regex.contains(text: Char): Boolean = this.matches(text.toString())
+    public operator fun Regex.contains(text: Char): Boolean = this.matches(text.toString())
+    public operator fun Regex.contains(text: String): Boolean = this.matches(text)
 
 }
