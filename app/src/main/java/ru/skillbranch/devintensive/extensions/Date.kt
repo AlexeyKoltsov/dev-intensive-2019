@@ -39,7 +39,7 @@ enum class TimeUnits{
     HOUR,
     DAY;
 
-    fun plural(num:Int): String{
+    fun plural(value:Int): String{
 
         var result:String=""
         var token:String=""
@@ -55,16 +55,16 @@ enum class TimeUnits{
             "DAY" -> {token = "д"; t1="ень"; t2="ня";t3="ней"}
         }
 
-        if(num == 1){
+        if(value == 1){
             result += token+t1
         }
-        else if(patternperiods.matches(num.toString())){
+        else if(patternperiods.matches(value.toString())){
             result += token+t2
         }
         else{
             result += token+t3
         }
-        return "$num $result"
+        return "$value $result"
     }
 
 }
