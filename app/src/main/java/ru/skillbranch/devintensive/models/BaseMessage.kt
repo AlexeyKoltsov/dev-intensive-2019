@@ -14,11 +14,11 @@ abstract class BaseMessage(
 
     companion object AbstractMFactory{
         var lastid = -1
-        fun makeMessage(from:User,chat: Chat,date: Date=Date(),type:String="text",payload: Any?):BaseMessage{
+        fun makeMessage(from:User,chat: Chat,date: Date=Date(),type:String="text",payload: Any?,isIncoming: Boolean=false):BaseMessage{
             lastid++
             return when(type){
-                "image" -> ImageMessage("$lastid",from,chat,date = date,image = payload as String)
-                else -> TextMessage("$lastid",from,chat,date = date,text = payload as String)
+                "image" -> ImageMessage("$lastid",from,chat,date = date,image = payload as String,isIncoming = isIncoming)
+                else -> TextMessage("$lastid",from,chat,date = date,text = payload as String,isIncoming = isIncoming)
             }
         }
     }

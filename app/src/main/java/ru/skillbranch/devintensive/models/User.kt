@@ -26,8 +26,6 @@ data class User(
         fun makeUser(fullName: String?): User {
             this.lastId++
             val (firstName, lastName) = Utils.parseFullName(fullName)
-
-            //println("Created user:\nid:$lastId\nFirstname:$firstName\nLastname:$lastName")
             var user = User("$lastId", firstName, lastName)
             return user
         }
@@ -40,7 +38,7 @@ data class User(
             internal var avatar: String? = null
             internal var rating: Int = 0
             internal var respect: Int = 0
-            internal var lastVisit: Date? = null
+            internal var lastVisit: Date? = Date()
             internal var isOnline: Boolean = false
 
             fun id(id: String) = apply { this.id = id }
