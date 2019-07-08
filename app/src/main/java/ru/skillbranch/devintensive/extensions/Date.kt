@@ -12,7 +12,7 @@ const val HOUR = 60 * MINUTE
 const val DAY = 24 * HOUR
 
 
-fun Date.format(pattern: String="dd.MM.yyyy HH:mm:ss"):String{
+fun Date.format(pattern: String="HH:mm:ss dd.MM.yy"):String{
     val dateFormat = SimpleDateFormat(pattern, Locale("ru"))
 
     return  dateFormat.format(this)
@@ -46,7 +46,7 @@ enum class TimeUnits{
         var t1:String=""
         var t2:String=""
         var t3:String=""
-        val patternperiods = Regex("([234])|([2-5][0-9])")
+        val patternperiods = Regex("""(\d+[2-90]+|[2-90]*)[234]""")
 
         when(this.toString()){
             "SECOND" -> {token = "секунд"; t1="у"; t2="ы";t3=""}

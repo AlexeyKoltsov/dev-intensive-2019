@@ -4,11 +4,13 @@ import ru.skillbranch.devintensive.utils.Utils.contains
 
 object Utils {
     fun parseFullName(fullName:String?):Pair<String?,String?>{
-        var splitted: List<String>? = fullName?.split(" ")
+        var splitted: List<String>? = fullName?.trim()?.split(" ")
 
-        val firstName = splitted?.getOrNull(0)
-        val lastName = splitted?.getOrNull(1)
+        var firstName = splitted?.getOrNull(0)
+        var lastName = splitted?.getOrNull(1)
 
+        if(firstName == "") firstName = null
+        if(lastName == "") lastName = null
 
         return firstName to lastName
     }
@@ -79,13 +81,13 @@ object Utils {
         var ln = lastName?.trim() ?: ""
 
         if(fn != ""){
-            first = transliteration(fn).toUpperCase().toCharArray()[0].toString()
+            first = fn.toUpperCase().toCharArray()[0].toString()
         }
         else{
             first = ""
         }
         if(ln != ""){
-            second = transliteration(ln).toUpperCase().toCharArray()[0].toString()
+            second = ln.toUpperCase().toCharArray()[0].toString()
         }
         else{
             second = ""

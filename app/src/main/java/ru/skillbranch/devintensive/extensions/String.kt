@@ -16,7 +16,7 @@ fun String.stripHtml():String{
 
     var res = this
     val ptnSpaces = """\s+"""
-    val ptnHtml = """</?[\w\s\d=&"']*>"""
+    val ptnHtml = """(<\/?[\w\s\d="'\.\\/;:-]*>)|(&#?[\w\d]+;)"""
 
     val step1 = Regex(ptnHtml)
     val step2 = Regex(ptnSpaces)
