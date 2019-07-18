@@ -79,7 +79,7 @@ class Bender(var status:Status=Status.NORMAL, var question:Question=Question.NAM
             override fun nextQuestion(): Question = IDLE
             override fun validate(answer: String): Boolean = answer.trim().contains(Regex("^[0-9]{7}$"))
         },
-        IDLE("На этом всё, вопросов больше нет", listOf()) {
+        IDLE("На этом все, вопросов больше нет", listOf()) {
             override fun nextQuestion(): Question = IDLE
             override fun validate(answer: String): Boolean = true
         };
