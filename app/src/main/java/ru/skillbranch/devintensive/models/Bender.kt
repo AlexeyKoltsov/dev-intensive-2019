@@ -24,7 +24,7 @@ class Bender(var status:Status=Status.NORMAL, var question:Question=Question.NAM
                 var reaction = "Это неправильный ответ"
 
                 when(status){
-                    Status.CRITICAL -> {reaction += ". Давай все по новой\n"; question = Question.NAME; status = Status.NORMAL}
+                    Status.NORMAL -> {reaction += ". Давай все по новой\n"; question = Question.NAME}
                     else -> reaction += "\n"
                 }
 

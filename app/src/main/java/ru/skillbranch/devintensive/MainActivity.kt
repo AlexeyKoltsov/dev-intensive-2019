@@ -41,13 +41,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         makeSendOnActionDone(messageEt)
         val status = savedInstanceState?.getString("STATUS") ?: Bender.Status.NORMAL.name
         val question = savedInstanceState?.getString("QUESTION") ?: Bender.Question.NAME.name
-        benderObj = Bender(Bender.Status.valueOf(status),Bender.Question.valueOf(question))
+        benderObj = Bender(Bender.Status.valueOf(status), Question.valueOf(question))
 
         Log.d("M_MainActivity","onCreate $status $question")
         var (r,g,b) = benderObj.status.color
         benderImage.setColorFilter(Color.rgb(r,g,b),PorterDuff.Mode.MULTIPLY)
-
-
         textTxt.text = benderObj.askQuestion()
 
         messageEt.setOnEditorActionListener{ _, actionId, event ->
