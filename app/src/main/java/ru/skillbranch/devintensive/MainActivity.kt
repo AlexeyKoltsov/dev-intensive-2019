@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
         sendBtn.setOnClickListener{
-            sendAnswer()
+            onClick(this.messageEt)
         }
 
     }
