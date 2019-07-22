@@ -16,6 +16,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.TextView.OnEditorActionListener
 import kotlinx.android.synthetic.main.activity_main.*
+import ru.skillbranch.devintensive.extensions.hideKeyboard
 import ru.skillbranch.devintensive.models.Bender
 import ru.skillbranch.devintensive.models.Bender.Question
 
@@ -55,7 +56,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 event.action == KeyEvent.ACTION_DOWN &&
                 event.keyCode == KeyEvent.KEYCODE_ENTER
             ) {
-                sendAnswer()
+                onClick(this.messageEt)
+                hideKeyboard()
                 true
             } else {
                 false
@@ -75,43 +77,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
     override fun onClick(v: View?) {
-        if (v?.id == R.id.iv_send)
             if (isAnswerValid())
                 sendAnswer()
             else makeErrorMessage()
     }
 
-    override fun onStart() {
-        super.onStart()
-        Log.d("M_MainActivity","onStart")
-    }
-
-    override fun onRestart() {
-        super.onRestart()
-        Log.d("M_MainActivity","onRestart")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.d("M_MainActivity","OnResume")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d("M_MainActivity","Pause")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("M_MainActivity","Destroy")
-    }
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
-        
         outState?.putString("STATUS", benderObj.status.name)
         outState?.putString("QUESTION", benderObj.question.name)
-        Log.d("M_MainActivity","onSaveInstanceState ${benderObj.status.name}  ${benderObj.question.name}")
     }
 
     private fun isAnswerValid(): Boolean {
